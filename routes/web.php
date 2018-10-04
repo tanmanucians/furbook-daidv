@@ -74,3 +74,6 @@ Route::put('/cats', function () {
 Route::delete('/cats/{id}', function ($id) {
     return 'Delete cat #' . $id;
 })->name('cat.destroy');
+
+// Test
+Route::get('test', 'TestController@_is_last_weekday_of_month');
