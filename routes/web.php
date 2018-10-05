@@ -31,7 +31,7 @@ Route::get('/', function () {
 
 // Show list cats
 Route::get('/cats', function () {
-    $cats = Furbook\Cat::all();
+    $cats = Furbook\Cat::orderBy('created_at', 'DESC')->get();
     //dd($cats);
     return view('cats.index')->with('cats', $cats);
 })->name('cat.index');
@@ -52,12 +52,31 @@ Route::get('/cats/{id}', function ($id) {
 
 // Show form create cat
 Route::get('/cats/create', function () {
-    return 'Show form create cat';
+    $breeds = Furbook\Breed::pluck('name', 'id');
+    //dd($breeds);
+    return view('cats.create', compact('breeds'));
 })->name('cat.create');
 
 // Insert new cat
 Route::post('/cats', function () {
-    return 'Insert new cat';
+    $validator = Validator::make(request()->all(), [
+        'name' => 'required|max:255',
+        'date_of_birth' => 'required|date_format:"Y-m-d"',
+        'breed_id' => 'required|numeric',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()
+            ->back()
+            ->withErrors($validator)
+            //->with('errors', $validator)
+            ->withInput();
+    }
+
+    $data = Request::all();
+    Furbook\Cat::create($data);
+    return redirect()
+        ->route('cat.index');
 })->name('cat.store');
 
 // Show form edit cat
