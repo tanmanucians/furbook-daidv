@@ -18,4 +18,14 @@ class Cat extends Model
     public function breed() {
         return $this->belongsTo('Furbook\Breed', 'breed_id', 'id');
     }
+
+	/**
+	 * Get the route key for the model.
+	 *
+	 * @return string
+	 */
+	public function getRouteKeyName()
+	{
+		return 'id';
+	}
 }
