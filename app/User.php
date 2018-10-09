@@ -27,4 +27,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_admin' => 'boolean',
+    ];
+
+    public function owns(Cat $cat){
+        return $this->id == $cat->user_id;
+    }
+
+    public function canEdit(Cat $cat){
+        return $this->is_admin || $this->owns($cat);
+    }
+
+    public function isAdministrator(){
+        return $this->getAttribute('is_admin');
+    }
 }

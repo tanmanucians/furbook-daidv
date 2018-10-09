@@ -38,7 +38,15 @@ Route::get('/', function () {
 Route::resource('cats', 'CatController');
 
 // Show list cats belong to breed
-Route::get('/cats/breeds/{name}', ['uses' => 'CatController@breed', 'as' => 'cats.breed']);
+Route::get('/cats/breeds/{name}', [
+    'uses' => 'CatController@breed',
+    'as' => 'cats.breed',
+    //'middleware' => 'admin'
+]);
+//->middleware('admin');
 
 // Test
 Route::get('test', 'TestController@_is_last_weekday_of_month');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
