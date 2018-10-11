@@ -26,6 +26,9 @@
         @endif
         @yield('content')
     </div>
+    <div id="loading" style="display: none;">
+        <img src="/img/loading.gif" alt="loading" style="position: absolute;top: 7%;left: 41%;">
+    </div>
     <!-- Scripts -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>

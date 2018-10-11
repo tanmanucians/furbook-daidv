@@ -27,8 +27,12 @@ class CatController extends Controller
      */
     public function index()
     {
-        $cats = Cat::orderBy('created_at', 'DESC')->get();
+        $perPage = 5;
+        $cats = Cat::orderBy('created_at', 'DESC')->paginate($perPage);
         //dd($cats);
+        if(request()->ajax()) {
+            return view('partials.cat')->with('cats', $cats);
+        }
         return view('cats.index')->with('cats', $cats);
     }
 
